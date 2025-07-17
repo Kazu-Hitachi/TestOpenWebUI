@@ -1,0 +1,2 @@
+# TestOpenWebUI
+ArgoCDを利用したOpenWebUIのデプロイテスト用リポジトリ
