@@ -11,15 +11,15 @@ replicaCount: 1
 # -- Strategy for updating the deployment
 strategy: {}
 image:
-  repository: ghcr.io/open-webui/pipelines
+  repository: pj-registry.soft-seigi.intra.hitachi.co.jp/cs3_dify_workflow/ghcr.io/open-webui/pipelines
   tag: main
   pullPolicy: Always
 
 # -- Configure imagePullSecrets to use private registry
 # ref: <https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry>
-imagePullSecrets: []
-# imagePullSecrets:
-# - name: myRegistryKeySecretName
+# imagePullSecrets: []
+imagePullSecrets:
+ - name: regcred
 
 resources: {}
 ingress:

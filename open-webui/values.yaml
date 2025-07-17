@@ -64,7 +64,7 @@ websocket:
       annotations: {}
     # -- Redis image
     image:
-      repository: redis
+      repository: pj-registry.soft-seigi.intra.hitachi.co.jp/cs3_dify_workflow/redis
       tag: 7.4.2-alpine3.21
       pullPolicy: IfNotPresent
     # -- Redis command (overrides default)
@@ -126,8 +126,8 @@ replicaCount: 1
 strategy: {}
 # -- Open WebUI image tags can be found here: https://github.com/open-webui/open-webui
 image:
-  repository: ghcr.io/open-webui/open-webui
-  tag: ""
+  repository: pj-registry.soft-seigi.intra.hitachi.co.jp/cs3_dify_workflow/ghcr.io/open-webui/open-webui
+  tag: latest
   pullPolicy: "IfNotPresent"
 
 # -- Open WebUI container command (overrides default entrypoint)
@@ -143,9 +143,9 @@ serviceAccount:
 
 # -- Configure imagePullSecrets to use private registry
 # ref: <https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry>
-imagePullSecrets: []
-# imagePullSecrets:
-# - name: myRegistryKeySecretName
+# imagePullSecrets: []
+imagePullSecrets:
+ - name: regcred
 
 # -- Probe for liveness of the Open WebUI container
 # ref: <https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes>

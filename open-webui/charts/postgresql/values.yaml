@@ -23,7 +23,7 @@ global:
   ##
   security:
     ## @param global.security.allowInsecureImages Allows skipping image verification
-    allowInsecureImages: false
+    allowInsecureImages: true
   postgresql:
     ## @param global.postgresql.fullnameOverride Full chart name (overrides `fullnameOverride`)
     ## @param global.postgresql.auth.postgresPassword Password for the "postgres" admin user (overrides `auth.postgresPassword`)
@@ -119,7 +119,7 @@ diagnosticMode:
 ## @param image.debug Specify if debug values should be set
 ##
 image:
-  registry: docker.io
+  registry: pj-registry.soft-seigi.intra.hitachi.co.jp/cs3_dify_workflow
   repository: bitnami/postgresql
   tag: 17.5.0-debian-12-r16
   digest: ""
@@ -131,10 +131,10 @@ image:
   ## Secrets must be manually created in the namespace.
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
   ## Example:
-  ## pullSecrets:
-  ##   - myRegistryKeySecretName
+  pullSecrets:
+    - regcred
   ##
-  pullSecrets: []
+  ## pullSecrets: []
   ## Set to true if you would like to see extra information on logs
   ##
   debug: false
@@ -1597,7 +1597,7 @@ volumePermissions:
   ## @param volumePermissions.image.pullSecrets Init container volume-permissions image pull secrets
   ##
   image:
-    registry: docker.io
+    registry: pj-registry.soft-seigi.intra.hitachi.co.jp/cs3_dify_workflow
     repository: bitnami/os-shell
     tag: 12-debian-12-r47
     digest: ""
@@ -1606,10 +1606,10 @@ volumePermissions:
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
     ## Example:
-    ## pullSecrets:
-    ##   - myRegistryKeySecretName
+    pullSecrets:
+      - regcred
     ##
-    pullSecrets: []
+    ## pullSecrets: []
   ## Init container resource requests and limits
   ## ref: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
   ## @param volumePermissions.resourcesPreset Set container resources according to one common preset (allowed values: none, nano, micro, small, medium, large, xlarge, 2xlarge). This is ignored if volumePermissions.resources is set (volumePermissions.resources is recommended for production).
@@ -1706,7 +1706,7 @@ metrics:
   ## @param metrics.image.pullSecrets Specify image pull secrets
   ##
   image:
-    registry: docker.io
+    registry: pj-registry.soft-seigi.intra.hitachi.co.jp/cs3_dify_workflow
     repository: bitnami/postgres-exporter
     tag: 0.17.1-debian-12-r11
     digest: ""
@@ -1715,10 +1715,10 @@ metrics:
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
     ## Example:
-    ## pullSecrets:
-    ##   - myRegistryKeySecretName
+    pullSecrets:
+      - regcred
     ##
-    pullSecrets: []
+    ## pullSecrets: []
   ## @param metrics.collectors Control enabled collectors
   ## ref: https://github.com/prometheus-community/postgres_exporter#flags
   ## Example:

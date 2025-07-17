@@ -26,7 +26,7 @@ global:
   ##
   security:
     ## @param global.security.allowInsecureImages Allows skipping image verification
-    allowInsecureImages: false
+    allowInsecureImages: true
   redis:
     password: ""
   ## Compatibility adaptations for Kubernetes platforms
@@ -112,7 +112,7 @@ diagnosticMode:
 ## @param image.debug Enable image debug mode
 ##
 image:
-  registry: docker.io
+  registry: pj-registry.soft-seigi.intra.hitachi.co.jp/cs3_dify_workflow
   repository: bitnami/redis
   tag: 8.0.3-debian-12-r1
   digest: ""
@@ -124,10 +124,10 @@ image:
   ## Secrets must be manually created in the namespace.
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
   ## e.g:
-  ## pullSecrets:
-  ##   - myRegistryKeySecretName
+  pullSecrets:
+    - regcred
   ##
-  pullSecrets: []
+  ## pullSecrets: []
   ## Enable debug mode
   ##
   debug: false
@@ -1184,7 +1184,7 @@ sentinel:
   ## @param sentinel.image.debug Enable image debug mode
   ##
   image:
-    registry: docker.io
+    registry: pj-registry.soft-seigi.intra.hitachi.co.jp/cs3_dify_workflow
     repository: bitnami/redis-sentinel
     tag: 8.0.3-debian-12-r1
     digest: ""
@@ -1196,10 +1196,10 @@ sentinel:
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
     ## e.g:
-    ## pullSecrets:
-    ##   - myRegistryKeySecretName
+    pullSecrets:
+      - regcred
     ##
-    pullSecrets: []
+    ## pullSecrets: []
     ## Enable debug mode
     ##
     debug: false
@@ -1783,7 +1783,7 @@ metrics:
   ## @param metrics.image.pullSecrets Redis(R) Exporter image pull secrets
   ##
   image:
-    registry: docker.io
+    registry: pj-registry.soft-seigi.intra.hitachi.co.jp/cs3_dify_workflow
     repository: bitnami/redis-exporter
     tag: 1.74.0-debian-12-r1
     digest: ""
@@ -1792,10 +1792,10 @@ metrics:
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
     ## e.g:
-    ## pullSecrets:
-    ##   - myRegistryKeySecretName
+    pullSecrets:
+      - regcred
     ##
-    pullSecrets: []
+    ## pullSecrets: []
   ## @param metrics.containerPorts.http Metrics HTTP container port
   ##
   containerPorts:
@@ -2161,7 +2161,7 @@ volumePermissions:
   ## @param volumePermissions.image.pullSecrets OS Shell + Utility image pull secrets
   ##
   image:
-    registry: docker.io
+    registry: pj-registry.soft-seigi.intra.hitachi.co.jp/cs3_dify_workflow
     repository: bitnami/os-shell
     tag: 12-debian-12-r47
     digest: ""
@@ -2170,10 +2170,10 @@ volumePermissions:
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
     ## e.g:
-    ## pullSecrets:
-    ##   - myRegistryKeySecretName
+    pullSecrets:
+      - regcred
     ##
-    pullSecrets: []
+    ## pullSecrets: []
   ## Init container's resource requests and limits
   ## ref: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
   ## @param volumePermissions.resourcesPreset Set container resources according to one common preset (allowed values: none, nano, micro, small, medium, large, xlarge, 2xlarge). This is ignored if volumePermissions.resources is set (volumePermissions.resources is recommended for production).
@@ -2225,7 +2225,7 @@ kubectl:
   ## @param kubectl.image.pullSecrets Kubectl pull secrets
   ##
   image:
-    registry: docker.io
+    registry: pj-registry.soft-seigi.intra.hitachi.co.jp/cs3_dify_workflow
     repository: bitnami/kubectl
     tag: 1.33.2-debian-12-r2
     digest: ""
@@ -2237,10 +2237,10 @@ kubectl:
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
     ## e.g:
-    ## pullSecrets:
-    ##   - myRegistryKeySecretName
+    pullSecrets:
+      - regcred
     ##
-    pullSecrets: []
+    ## pullSecrets: []
   ## @param kubectl.command kubectl command to execute
   ##
   command: ["/opt/bitnami/scripts/kubectl-scripts/update-master-label.sh"]
@@ -2294,7 +2294,7 @@ sysctl:
   ## @param sysctl.image.pullSecrets OS Shell + Utility image pull secrets
   ##
   image:
-    registry: docker.io
+    registry: pj-registry.soft-seigi.intra.hitachi.co.jp/cs3_dify_workflow
     repository: bitnami/os-shell
     tag: 12-debian-12-r47
     digest: ""
@@ -2303,10 +2303,10 @@ sysctl:
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
     ## e.g:
-    ## pullSecrets:
-    ##   - myRegistryKeySecretName
+    pullSecrets:
+      - regcred
     ##
-    pullSecrets: []
+    ## pullSecrets: []
   ## @param sysctl.command Override default init-sysctl container command (useful when using custom images)
   ##
   command: []
