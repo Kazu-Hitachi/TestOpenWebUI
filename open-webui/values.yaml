@@ -384,8 +384,6 @@ volumeMounts:
 extraInitContainers:
   - name: copy-and-fix-permissions
     image: pj-registry.soft-seigi.intra.hitachi.co.jp/cs3_dify_workflow/busybox:latest
-    securityContext:
-      runAsUser: 0
     command:
       - /bin/sh
       - "-c"
