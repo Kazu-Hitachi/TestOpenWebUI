@@ -368,7 +368,7 @@ volumeMounts:
   initContainer: []
   # - name: ""
   #   mountPath: ""
-  container: []
+  container: 
     - name: "app-data-copy"
       mountPath: /app
 
