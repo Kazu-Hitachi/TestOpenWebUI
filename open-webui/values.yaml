@@ -397,7 +397,7 @@ podSecurityContext:
   # {}
   fsGroupChangePolicy: "OnRootMismatch"
   # sysctls: []
-  # supplementalGroups: []
+  supplementalGroups: [0]
   fsGroup: 1001000000
 
 # -- Configure container security context
