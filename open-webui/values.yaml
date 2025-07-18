@@ -369,8 +369,8 @@ volumeMounts:
   # - name: ""
   #   mountPath: ""
   container: []
-  - name: "app-data-copy"
-    mountPath: /app
+    - name: "app-data-copy"
+      mountPath: /app
 
 # -- Additional init containers to add to the deployment/statefulset
 # ref: <https://kubernetes.io/docs/concepts/workloads/pods/init-containers/>
