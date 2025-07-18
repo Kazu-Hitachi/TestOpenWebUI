@@ -121,7 +121,7 @@ clusterDomain: cluster.local
 annotations: {}
 podAnnotations: {}
 podLabels: 
-  networkpolicy.gen-ai-cf.intra.hitachi.co.jp/allow-access-from-api-gateway: “true”
+  networkpolicy.gen-ai-cf.intra.hitachi.co.jp/allow-access-from-api-gateway: true
 replicaCount: 1
 # -- Strategy for updating the workload manager: deployment or statefulset
 strategy: {}
