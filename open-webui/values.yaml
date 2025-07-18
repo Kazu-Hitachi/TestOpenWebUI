@@ -369,27 +369,39 @@ volumeMounts:
   # - name: ""
   #   mountPath: ""
   container: []
-  # - name: ""
-  #   mountPath: ""
+  - name: app-backend-data 
+    mountPath: /app/backend
 
 # -- Additional init containers to add to the deployment/statefulset
 # ref: <https://kubernetes.io/docs/concepts/workloads/pods/init-containers/>
-extraInitContainers: []
-# - name: custom-init
-#   image: busybox:latest
-#   command: ['sh', '-c', 'echo "Custom init container running"']
-#   volumeMounts:
-#   - name: data
-#     mountPath: /data
+extraInitContainers:
+- name: copy-and-fix-permissions
+  image:
+    repository: docker pull pj-registry.soft-seigi.intra.hitachi.co.jp/cs3_dify_workflow/busybox
+    tag: latest
+    pullPolicy: IfNotPresent
+  command: 
+    - /bin/sh 
+    - -c 
+    - | 
+      echo "Copying application files from /app/backend to /mnt/app-data..." 
+      cp -R /app/backend/. /mnt/app-data/ 
+      echo "Changing ownership of copied files..." 
+      chown -R 1001000000:1001000000 /mnt/app-data 
+      echo "Init container finished." 
+  volumeMounts: 
+    - name: app-backend-data 
+      mountPath: /mnt/app-data
+
 
 # -- Configure pod volumes
 # ref: <https://kubernetes.io/docs/tasks/configure-pod-container/configure-volume-storage/>
-volumes: []
+volumes:
 # - name: ""
 #   configMap:
 #     name: ""
-# - name: ""
-#   emptyDir: {}
+- name: "app-backend-data"
+  emptyDir: {}
 
 # -- Configure pod security context
 # ref: <https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container>
@@ -397,7 +409,7 @@ podSecurityContext:
   # {}
   fsGroupChangePolicy: "OnRootMismatch"
   # sysctls: []
-  supplementalGroups: [0]
+  # supplementalGroups: [0]
   fsGroup: 1001000000
 
 # -- Configure container security context
@@ -409,7 +421,7 @@ containerSecurityContext:
   runAsNonRoot: true
   privileged: false
   allowPrivilegeEscalation: false
-  readOnlyRootFilesystem: true
+  readOnlyRootFilesystem: false
   capabilities:
     drop:
       - ALL
