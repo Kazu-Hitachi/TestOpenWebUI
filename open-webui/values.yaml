@@ -398,14 +398,14 @@ podSecurityContext:
   fsGroupChangePolicy: "OnRootMismatch"
   # sysctls: []
   # supplementalGroups: []
-  fsGroup: 1001410000
+  fsGroup: 1001000000
 
 # -- Configure container security context
 # ref: <https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-containe>
 containerSecurityContext:
   # {}
-  # runAsUser: 1001000001
-  # runAsGroup: 1001000001
+  # runAsUser: 1001000000
+  # runAsGroup: 1001000000
   runAsNonRoot: true
   privileged: false
   allowPrivilegeEscalation: false
