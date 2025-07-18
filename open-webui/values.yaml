@@ -367,7 +367,7 @@ runtimeClassName: ""
 volumeMounts:
   container:
     - name: app-backend-data
-      mountPath: /app/backend
+      mountPath: /app
 
 # -- Additional init containers to add to the deployment/statefulset
 # ref: <https://kubernetes.io/docs/concepts/workloads/pods/init-containers/>
