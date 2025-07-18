@@ -370,7 +370,7 @@ volumeMounts:
   #   mountPath: ""
   container: 
     - name: "app-data-copy"
-      mountPath: /app/backend
+      mountPath: /app
 
 # -- Additional init containers to add to the deployment/statefulset
 # ref: <https://kubernetes.io/docs/concepts/workloads/pods/init-containers/>
@@ -384,12 +384,14 @@ volumeMounts:
 extraInitContainers:
   - name: copy-and-fix-permissions
     image: pj-registry.soft-seigi.intra.hitachi.co.jp/cs3_dify_workflow/busybox:latest
+    securityContext:
+      runAsUser: 0
     command:
       - /bin/sh
       - "-c"
       - |
         echo "Copying application files from /app to /mnt/app-data..."
-        cp -R /app/backend. /mnt/app-data/
+        cp -R /app/. /mnt/app-data/
         echo "Changing ownership of copied files..."
         chown -R 1001000000:1001000000 /mnt/app-data
         echo "Init container finished."
