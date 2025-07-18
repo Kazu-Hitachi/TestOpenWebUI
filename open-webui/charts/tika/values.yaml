@@ -36,7 +36,7 @@ networkPolicy:
 nodeSelector: {}
 podAnnotations: {}
 podSecurityContext: 
-  fsGroup: 1001410000
+  fsGroup: 1001000000
 readinessProbe:
   failureThreshold: 20
   initialDelaySeconds: 15
@@ -57,9 +57,9 @@ securityContext:
     drop:
     - ALL
   readOnlyRootFilesystem: true
-  runAsGroup: 1001410000
+  runAsGroup: 1001000000
   runAsNonRoot: true
-  runAsUser: 1001410000
+  runAsUser: 1001000000
 service:
   port: 9998
   type: ClusterIP
