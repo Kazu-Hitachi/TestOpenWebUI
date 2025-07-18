@@ -384,12 +384,12 @@ extraInitContainers: []
 
 # -- Configure pod volumes
 # ref: <https://kubernetes.io/docs/tasks/configure-pod-container/configure-volume-storage/>
-volumes: []
+volumes:
 # - name: ""
 #   configMap:
 #     name: ""
-# - name: ""
-#   emptyDir: {}
+- name: "app-backend-data"
+  emptyDir: {}
 
 # -- Configure pod security context
 # ref: <https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container>
@@ -397,15 +397,15 @@ podSecurityContext:
   # {}
   fsGroupChangePolicy: "OnRootMismatch"
   # sysctls: []
-  supplementalGroups: [0]
-  fsGroup: 1001000000
+  # supplementalGroups: [0]
+  fsGroup: 1001410000
 
 # -- Configure container security context
 # ref: <https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-containe>
 containerSecurityContext:
   # {}
-  runAsUser: 1001000000
-  runAsGroup: 1001000000
+  runAsUser: 1001410000
+  runAsGroup: 1001410000
   runAsNonRoot: true
   privileged: false
   allowPrivilegeEscalation: false
