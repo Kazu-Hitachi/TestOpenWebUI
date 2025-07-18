@@ -365,37 +365,22 @@ runtimeClassName: ""
 # -- Configure container volume mounts
 # ref: <https://kubernetes.io/docs/tasks/configure-pod-container/configure-volume-storage/>
 volumeMounts:
-  # initContainer: []
+  initContainer: []
   # - name: ""
   #   mountPath: ""
-  container: 
-    - name: "app-data-copy"
-      mountPath: /app/backend
+  container: []
+  # - name: ""
+  #   mountPath: ""
 
 # -- Additional init containers to add to the deployment/statefulset
 # ref: <https://kubernetes.io/docs/concepts/workloads/pods/init-containers/>
-# extraInitContainers: []
+extraInitContainers: []
 # - name: custom-init
 #   image: busybox:latest
 #   command: ['sh', '-c', 'echo "Custom init container running"']
 #   volumeMounts:
 #   - name: data
 #     mountPath: /data
-extraInitContainers:
-  - name: copy-and-fix-permissions
-    image: pj-registry.soft-seigi.intra.hitachi.co.jp/cs3_dify_workflow/busybox:latest
-    command:
-      - /bin/sh
-      - "-c"
-      - |
-        echo "Copying application files from /app to /mnt/app-data..."
-        cp -R /app/backend/. /mnt/app-data/
-        echo "Changing ownership of copied files..."
-        chown -R 1001000000:1001000000 /mnt/app-data
-        echo "Init container finished."
-    volumeMounts:
-      - name: app-data-copy
-        mountPath: /mnt/app-data
 
 # -- Configure pod volumes
 # ref: <https://kubernetes.io/docs/tasks/configure-pod-container/configure-volume-storage/>
@@ -403,8 +388,8 @@ volumes:
 # - name: ""
 #   configMap:
 #     name: ""
-  - name: "app-data-copy"
-    emptyDir: {}
+- name: "app-backend-data"
+  emptyDir: {}
 
 # -- Configure pod security context
 # ref: <https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container>
