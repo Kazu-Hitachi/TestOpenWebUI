@@ -376,10 +376,7 @@ volumeMounts:
 # ref: <https://kubernetes.io/docs/concepts/workloads/pods/init-containers/>
 extraInitContainers:
 - name: copy-and-fix-permissions
-  image:
-    repository: docker pull pj-registry.soft-seigi.intra.hitachi.co.jp/cs3_dify_workflow/busybox
-    tag: latest
-    pullPolicy: IfNotPresent
+  image: docker pull pj-registry.soft-seigi.intra.hitachi.co.jp/cs3_dify_workflow/busybox:latest
   command: 
     - /bin/sh 
     - -c 
