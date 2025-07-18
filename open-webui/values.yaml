@@ -379,7 +379,7 @@ extraInitContainers:
       - "-c"
       - |
         echo "Copying application files from /app/backend to /mnt/app-data..."
-        cp -R /app/backend/. /mnt/app-data/
+        cp -R /app/. /mnt/app-data/
         echo "Changing ownership of copied files..."
         chown -R 1001000000:1001000000 /mnt/app-data
         echo "Init container finished."
