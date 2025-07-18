@@ -10,4 +10,4 @@ spec:
   target:
     service:
       name: open-webui
-      port: 8080
+      port: 80
