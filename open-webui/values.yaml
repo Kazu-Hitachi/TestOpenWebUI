@@ -12,10 +12,7 @@ ollama:
   #     type: 'nvidia'
   #     number: 1
   #   models:
-  #     pull:
-  #       - llama3
-  #     run:
-  #       - llama3
+  #     - llama3
   # runtimeClassName: nvidia
   # persistentVolume:
   #   enabled: true
@@ -89,11 +86,9 @@ websocket:
       nodePort: ""
     # -- Redis tolerations for pod assignment
     tolerations: []
-
-    # -- Redis affinity for pod assignment
+# -- Redis affinity for pod assignment
     affinity: {}
-
-    # -- Redis security context
+# -- Redis security context
     securityContext:
       {}
       # runAsUser: 999
@@ -120,7 +115,7 @@ clusterDomain: cluster.local
 
 annotations: {}
 podAnnotations: {}
-podLabels: 
+podLabels:
   networkpolicy.gen-ai-cf.intra.hitachi.co.jp/allow-access-from-api-gateway: "true"
 replicaCount: 1
 # -- Strategy for updating the workload manager: deployment or statefulset
@@ -186,9 +181,7 @@ copyAppData:
   command: []
   # -- Open WebUI copy-app-data init container arguments (overrides default)
   args: []
-
-  resources: {}
-
+resources: {}
 managedCertificate:
   enabled: false
   name: "mydomain-chat-cert" # You can override this name if needed
@@ -213,8 +206,7 @@ ingress:
   additionalHosts: []
   tls: false
   existingSecret: ""
-
-  # -- Additional custom labels to add to the Ingress metadata
+# -- Additional custom labels to add to the Ingress metadata
   # Useful for tagging, selecting, or applying policies to the Ingress via labels.
   extraLabels: {}
   # extraLabels:
@@ -390,26 +382,25 @@ volumes:
 #     name: ""
 - name: "app-backend-data"
   emptyDir: {}
-
+- name: app-backend-volume # 追加: 書き込み可能なアプリケーションコード用ボリューム
+  emptyDir: {}
 # -- Configure pod security context
 # ref: <https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container>
 podSecurityContext:
-  # {}
+  fsGroup: 1001000000
   fsGroupChangePolicy: "OnRootMismatch"
   # sysctls: []
   # supplementalGroups: [0]
-  fsGroup: 1001000000
-
 # -- Configure container security context
 # ref: <https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-containe>
 containerSecurityContext:
-  # {}
+
   runAsUser: 1001000000
   runAsGroup: 1001000000
   runAsNonRoot: true
   privileged: false
   allowPrivilegeEscalation: false
-  readOnlyRootFilesystem: true
+  readOnlyRootFilesystem: false # 修正: initContainerがコピーするためfalseにする
   capabilities:
     drop:
       - ALL
@@ -432,8 +423,7 @@ sso:
   # -- Enable OAuth group management through access token groups claim
   # @section -- SSO Configuration
   enableGroupManagement: false
-
-  google:
+google:
     # -- Enable Google OAuth
     # @section -- Google OAuth configuration
     enabled: false
@@ -449,8 +439,7 @@ sso:
     # -- Google OAuth client secret key from existing secret
     # @section -- Google OAuth configuration
     clientExistingSecretKey: ""
-
-  microsoft:
+microsoft:
     # -- Enable Microsoft OAuth
     # @section -- Microsoft OAuth configuration
     enabled: false
@@ -469,8 +458,7 @@ sso:
     # -- Microsoft tenant ID - use 9188040d-6c67-4c5b-b112-36a304b66dad for personal accounts
     # @section -- Microsoft OAuth configuration
     tenantId: ""
-
-  github:
+github:
     # -- Enable GitHub OAuth
     # @section -- GitHub OAuth configuration
     enabled: false
@@ -486,8 +474,7 @@ sso:
     # -- GitHub OAuth client secret key from existing secret
     # @section -- GitHub OAuth configuration
     clientExistingSecretKey: ""
-
-  oidc:
+oidc:
     # -- Enable OIDC authentication
     # @section -- OIDC configuration
     enabled: false
@@ -512,8 +499,7 @@ sso:
     # -- Scopes to request (space-separated).
     # @section -- OIDC configuration
     scopes: "openid email profile"
-
-  roleManagement:
+roleManagement:
     # -- The claim that contains the roles (can be nested, e.g., user.roles)
     # @section -- Role management configuration
     rolesClaim: "roles"
@@ -523,13 +509,11 @@ sso:
     # -- Comma-separated list of roles allowed to log in as admin (receive open webui role admin)
     # @section -- Role management configuration
     adminRoles: ""
-
-  groupManagement:
+groupManagement:
     # -- The claim that contains the groups (can be nested, e.g., user.memberOf)
     # @section -- SSO Configuration
     groupsClaim: "groups"
-
-  trustedHeader:
+trustedHeader:
     # -- Enable trusted header authentication
     # @section -- SSO trusted header authentication
     enabled: false
@@ -579,8 +563,7 @@ logging:
   # -- Set the global log level ["notset", "debug", "info" (default), "warning", "error", "critical"]
   # @section -- Logging configuration
   level: ""
-
-  # Optional granularity: override log levels per subsystem/component
+# Optional granularity: override log levels per subsystem/component
   # if not set, it will use the global level (see. https://docs.openwebui.com/getting-started/advanced-topics/logging#%EF%B8%8F-appbackend-specific-logging-levels)
   components:
     # -- Set the log level for the Audio processing component
@@ -616,3 +599,4 @@ logging:
     # -- Set the log level for the Authentication Webhook component
     # @section -- Logging configuration
     webhook: ""
+    

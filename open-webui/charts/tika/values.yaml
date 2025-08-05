@@ -35,7 +35,7 @@ networkPolicy:
   enabled: false
 nodeSelector: {}
 podAnnotations: {}
-podSecurityContext: 
+podSecurityContext:
   fsGroup: 1001000000
 readinessProbe:
   failureThreshold: 20
@@ -52,7 +52,7 @@ resources:
     cpu: "1"
     memory: 1500Mi
 securityContext:
-  allowPrivilegeEscalation: true
+  allowPrivilegeEscalation: false # 修正
   capabilities:
     drop:
     - ALL

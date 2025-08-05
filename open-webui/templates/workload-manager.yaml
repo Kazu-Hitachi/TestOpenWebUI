@@ -47,6 +47,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       initContainers:
+      - name: copy-app-code # 追加
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        command: ['sh', '-c', 'cp -r /app/backend/. /app-backend-writable']
+        volumeMounts:
+          - name: app-backend-volume
+            mountPath: /app-backend-writable
       - name: copy-app-data
         {{- with .Values.image }}
         image: {{ .repository }}:{{ .tag | default $.Chart.AppVersion }}
@@ -123,6 +130,8 @@ spec:
           {{- toYaml . | nindent 10 }}
         {{- end }}
         volumeMounts:
+        - name: app-backend-volume # 修正
+          mountPath: /app/backend
         - name: data
           mountPath: /app/backend/data
           {{- if .Values.persistence.subPath }}
@@ -348,8 +357,7 @@ spec:
         - name: "GLOBAL_LOG_LEVEL"
           value: {{ .Values.logging.level | quote }}
         {{- end }}
-
-        {{- if .Values.logging.components }}
+{{- if .Values.logging.components }}
         {{- range $name, $level := .Values.logging.components }}
         {{- if $level }}
         {{- include "logging.componentEnvVar" (dict "componentName" $name "logLevel" $level) | indent 8 }}
