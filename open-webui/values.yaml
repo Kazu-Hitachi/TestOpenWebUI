@@ -179,10 +179,10 @@ startupProbe: {}
 resources:
   requests:
     cpu: "500m"      # Podが最低限確保するCPU
-    memory: "1Gi"    # Podが最低限確保するメモリ
+    memory: "2Gi"    # Podが最低限確保するメモリ
   limits:
     cpu: "2000m"     # Podが使用できるCPUの上限
-    memory: "2Gi"    # Podが使用できるメモリの上限 (この値を増やします)
+    memory: "4Gi"    # Podが使用できるメモリの上限 (この値を増やします)
 
 copyAppData:
   # -- Open WebUI copy-app-data init container command (overrides default)
